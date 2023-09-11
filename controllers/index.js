@@ -13,7 +13,7 @@ const createPerson = Asyncly(async (req, res) => {
 });
 
 const getSinglePerson = Asyncly(async (req, res) => {
-  const person = await service.getPersonById(req.params.id, ['firstName', 'lastName', 'track', 'stage', 'email', 'phoneNumber', 'gender'], ['createdAt', 'updatedAt']) || await service.getPersonByEmail(req.params.id, ['firstName', 'lastName', 'track', 'stage', 'email', 'phoneNumber', 'gender'], ['createdAt', 'updatedAt']);
+  const person = await service.getPersonById(req.params.id, ['firstName', 'lastName', 'track', 'stage', 'email', 'phoneNumber', 'gender']) || await service.getPersonByEmail(req.params.id, ['firstName', 'lastName', 'track', 'stage', 'email', 'phoneNumber', 'gender']);
 
   if (!person) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Person was not found')
@@ -26,7 +26,7 @@ const getAllPersons = Asyncly(async (req, res) => {
   const page = pick(req.query, ['page']) || 1;
   const limit = pick(req.query, ['limit']) || 50;
   
-  const result = await service.queryPersons( limit.limit, page.page, undefined, ['firstName', 'lastName', 'track', 'stage', 'email', 'phoneNumber', 'gender'], ['createdAt', 'updatedAt']);
+  const result = await service.queryPersons( limit.limit, page.page, undefined, ['firstName', 'lastName', 'track', 'stage', 'email', 'phoneNumber', 'gender']);
   res.status(httpStatus.OK).send(result)
 })
 

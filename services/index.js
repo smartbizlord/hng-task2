@@ -16,7 +16,7 @@ const createPerson = async (userBody) => {
     return dB.people.create(userBody);
 };
 
-const queryPersons = async (limit, page, where, include, exclude) => {
+const queryPersons = async (limit, page, where, include = [], exclude = []) => {
   page = page || 1
   limit = limit || 50
     const personsCount = await dB.people.estimatedDocumentCount(where)
