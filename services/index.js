@@ -66,12 +66,13 @@ const updateUserById = async (userId, updateBody, exclude) => {
 };
 
 const deletePersonById = async (userId, exclude) => {
-    const person = await getPersonById(userId, undefined) || getPersonByEmail(userId, undefined);
+    // const person = await getPersonById(userId, undefined) || getPersonByEmail(userId, undefined);
+    const person = await dB.people.findByIdAndDelete(userId);
     if (!person) {
       throw new ApiError(httpStatus.NOT_FOUND, 'Person not found');
     }
-    // await dB.people.findByIdAndDelete(person);
-    person.deleteOne()
+    console.log(person, "Delete person")
+    // person.deleteOne()
     return person;
 };
 
