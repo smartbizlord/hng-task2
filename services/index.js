@@ -4,8 +4,7 @@ const ApiError = require("../utils/ApiError");
 
 
 const isEmailTaken = async function (email) {
-    const person = await dB.people.findOne({ where: { email } });
-    console.info(person);
+    const person = await dB.people.findOne({ email });
     return !!person;
 };
 
