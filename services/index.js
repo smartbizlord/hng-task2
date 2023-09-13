@@ -9,9 +9,6 @@ const isEmailTaken = async function (email) {
 };
 
 const createPerson = async (userBody) => {
-    if (await isEmailTaken(userBody.email)) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-    }
     return dB.people.create(userBody);
 };
 
@@ -40,8 +37,8 @@ const getPersonById = async (id, include = [], exclude = []) => {
     return person
 };
 
-const getPersonByEmail = async (email, include = [], exclude = []) => {
-    const person = dB.people.findOne({email}).select([include.join(" "), exclude.join(" -")].join(" "));
+const getPersonByEmail = async (name, include = [], exclude = []) => {
+    const person = dB.people.find({name}).select([include.join(" "), exclude.join(" -")].join(" "));
 
     return person
 };
@@ -50,9 +47,6 @@ const updateUserById = async (userId, updateBody, exclude) => {
     const person = await getPersonById(userId, undefined) //|| getPersonByEmail(userId, undefined);git 
     if (!person) {
       throw new ApiError(httpStatus.NOT_FOUND, 'Person not found');
-    }
-    if (updateBody.email && (await isEmailTaken(updateBody.email))) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
     }
     await Object.assign(person, updateBody);
     await person.save();
