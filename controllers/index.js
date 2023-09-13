@@ -13,7 +13,14 @@ const createPerson = Asyncly(async (req, res) => {
 });
 
 const getSinglePerson = Asyncly(async (req, res) => {
-  const person = await service.getPersonByEmail(req.params.id, ["name"]) || await service.getPersonById(req.params.id, ["name"]);
+  console.log((req.params.id).slice(0,6))
+  let person;
+  if((req.params.id).slice(0,5) !== 650198) {
+    person = await service.getPersonByEmail(req.params.id, ["name"]);
+  }
+  if((req.params.id).slice(0,6) == 650198) {
+    person = await service.getPersonById(req.params.id, ["name"]);
+  }
 
   if (!person) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Person was not found')
