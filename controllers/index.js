@@ -15,10 +15,10 @@ const createPerson = Asyncly(async (req, res) => {
 const getSinglePerson = Asyncly(async (req, res) => {
   console.log((req.params.id).slice(0,6))
   let person;
-  if((req.params.id).slice(0,5) !== 650198) {
+  if((req.params.id).slice(0,4) !== 6501) {
     person = await service.getPersonByEmail(req.params.id, ["name"]);
   }
-  if((req.params.id).slice(0,6) == 650198) {
+  if((req.params.id).slice(0,4) == 6501) {
     person = await service.getPersonById(req.params.id, ["name"]);
   }
 
